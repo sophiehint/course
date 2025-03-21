@@ -1,10 +1,25 @@
-name: Ruff
-on: [ push, pull_request ]
-jobs:
-  ruff:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: chartboost/ruff-action@v1
-        with:
-          args: 'format --check'
+# Configuration for Ruff, a fast linter for Python.
+# See: https://beta.ruff.rs/docs/configuration/
+
+target-version: ['py3.8', 'py3.9', 'py3.10']
+
+exclude:
+  - "tests"
+  - "migrations"
+  - "docs"
+
+disable:
+  - "F401"  # Ignore unused imports warning (in case some are needed later).
+  - "E501"  # Line length, but we may want to set a max line length limit instead.
+
+select:
+  - "E"  # Enable syntax and errors checks
+  - "F"  # Enable style and convention checks
+
+max-line-length: 100  # Adjust if necessary (can be 80, 100, etc.)
+
+function-naming-style: "snake_case"  # Ensures function names are in snake_case
+variable-naming-style: "snake_case"  # Ensures variable names are in snake_case
+
+docstrings: true  # Recommend docstrings for all functions
+
